@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: docker.io/newthingade/udagram-frontend
+        image: docker.io/ukeh11/udagram-frontend:v11  
         ports: 
         - containerPort: 80
         resources:
