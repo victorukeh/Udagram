@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       run: frontend
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -14,7 +14,26 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: docker.io/ukeh11/udagram-frontend:v11  
+        image: docker.io/ukeh11/udagram-frontend:v6
+        env:
+        - name: POSTGRES_HOST
+          value: "project-3-dev.ciazxxycfq72.eu-west-3.rds.amazonaws.com"
+        - name: POSTGRES_DB
+          value: "postgres"
+        - name: POSTGRES_USERNAME
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "postgres"
+        - name: AWS_BUCKET
+          value: "project-3-dev"
+        - name: AWS_REGION
+          value: "eu-west-3"
+        - name: AWS_PROFILE
+          value: "default"
+        - name: JWT_SECRET
+          value: "tsadasdasdsfdsfss"
+        - name: URL
+          value: "http://localhost:8080"
         ports: 
         - containerPort: 80
         resources:
@@ -22,3 +41,16 @@ spec:
             cpu: 500m
           requests:
             cpu: 200m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    run: frontend
+spec:
+  ports:
+  - port: 8100
+    protocol: TCP
+  selector:
+    run: frontend
